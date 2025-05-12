@@ -8,13 +8,48 @@ This project was built as part of the **Scout Matching System**, designed to mat
 
 ## 📦 Features
 
-- ✅ **Exact Match**: Full field matching (number + street + type + unit)
-- ✅ **Fuzzy Matching**: RapidFuzz + token_sort_ratio + blocking strategy
-- ✅ **Fallback Logic**:
-  - 🔊 Soundex phonetic matching
-  - 📊 Trigram similarity scoring
-- ✅ **Scalability-Ready**: Tested on up to 100000 rows due to device and cloud using restriction, designed for 200M+
-- ✅ **Modular Scripts**: `simulate`, `join`, `fallback`, `pipeline`, `report`
+## 🔍 Matching Logic Overview
+
+The address matching system is designed for accuracy, modularity, and scalability. The pipeline includes:
+
+---
+
+### ✅ Exact Match
+
+- Performs a full-field join on:  
+  `street_number + street_name + street_type + parsed_unit`
+- If **all corresponding columns** in the transaction and address tables **match exactly**, the records are linked automatically.
+- This ensures high-confidence matches without additional computation.
+
+---
+
+### ✅ Fuzzy Matching
+
+- Uses `RapidFuzz` with `token_sort_ratio` scorer for approximate string comparison.
+- Implements a **blocking strategy** by grouping on `street_name`, significantly reducing pairwise comparisons.
+- A **similarity threshold of 80%** is applied — if a transaction record and a candidate address row exceed this score, they are joined.
+- This allows for matching "Main Street" with "Main St", or typos like "Baker Ave." with "Bakker Avenue".
+
+---
+
+### ✅ Fallback Logic
+
+If records remain unmatched after exact + fuzzy matching, a fallback matching stage is triggered:
+
+- 🔊 **Soundex Matching**:  
+  Uses phonetic representation of street names (e.g., "Smith" ≈ "Smyth") to identify potential matches.
+- 📊 **Trigram Similarity**:  
+  Computes token-level trigram overlaps on normalized full address strings. Matches exceeding 0.80 similarity are retained.
+
+---
+
+### 🧠 Scalability-Ready
+
+- Pipeline was successfully tested with up to **100,000 rows** on a constrained local environment.
+- The architecture is designed to scale to **200 million rows or more** using:
+  - Pandas vectorized operations
+  - Batched I/O with PostgreSQL
+  - Blocking to avoid `O(n²)` fuzzy match explosion
 
 ---
 
