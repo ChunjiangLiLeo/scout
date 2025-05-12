@@ -99,7 +99,7 @@ scout/
 │   │   └── unmatched.py
 │   │       → Export and analyze unmatched transactions post-matching
 │
-├── reports/
+├── Reports/
 │   └── scalability_report_100k.md
 │       → Analysis of performance results for 100K sample test: runtime, memory, accuracy
 
