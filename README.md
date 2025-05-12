@@ -43,7 +43,7 @@ If records remain unmatched after exact + fuzzy matching, a fallback matching st
 
 ---
 
-### 🧠 Scalability-Ready
+### Scalability-Ready
 
 - Pipeline was successfully tested with up to **100,000 rows** on a constrained local environment.
 - The architecture is designed to scale to **200 million rows or more** using:
