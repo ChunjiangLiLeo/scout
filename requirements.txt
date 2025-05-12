@@ -1,0 +1,9 @@
+pandas>=2.0.0
+sqlalchemy>=2.0.0
+psycopg2-binary>=2.9.0
+usaddress>=0.5.10
+rapidfuzz>=3.0.0
+fuzzy>=1.2.2
+python-Levenshtein>=0.12.2
+difflib  # standard library, just noted for reference
+psutil>=5.9.0
