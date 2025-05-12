@@ -14,7 +14,7 @@ The address matching system is designed for accuracy, modularity, and scalabilit
 
 ---
 
-### ✅ Exact Match
+### Exact Match
 
 - Performs a full-field join on:  
   `street_number + street_name + street_type + parsed_unit`
@@ -23,7 +23,7 @@ The address matching system is designed for accuracy, modularity, and scalabilit
 
 ---
 
-### ✅ Fuzzy Matching
+### Fuzzy Matching
 
 - Uses `RapidFuzz` with `token_sort_ratio` scorer for approximate string comparison.
 - Implements a **blocking strategy** by grouping on `street_name`, significantly reducing pairwise comparisons.
@@ -32,13 +32,13 @@ The address matching system is designed for accuracy, modularity, and scalabilit
 
 ---
 
-### ✅ Fallback Logic
+### Fallback Logic
 
 If records remain unmatched after exact + fuzzy matching, a fallback matching stage is triggered:
 
-- 🔊 **Soundex Matching**:  
+- **Soundex Matching**:  
   Uses phonetic representation of street names (e.g., "Smith" ≈ "Smyth") to identify potential matches.
-- 📊 **Trigram Similarity**:  
+- **Trigram Similarity**:  
   Computes token-level trigram overlaps on normalized full address strings. Matches exceeding 0.80 similarity are retained.
 
 ---
